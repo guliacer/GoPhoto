@@ -20,34 +20,6 @@
   </p>
 </p>
 
-## Duplicate Detection Credits
-
-GoPhoto now includes duplicate-photo detection in Transfer History.
-
-重复照片检测功能已在本项目中注明开源参考与致谢：当前实现没有直接打包第三方重复检测库，而是在 Android 端参考并改写了活跃开源项目中常用的感知哈希路线。
-
-The implementation uses an on-device hybrid pipeline:
-
-- `SHA-256` exact-match grouping for byte-identical files
-- perceptual near-duplicate detection using `dHash` and `pHash`
-- local clustering tuned for Android so detection can run without a server
-
-This feature was selected after reviewing active open-source duplicate-image projects on GitHub and adapting the most practical approach for a native Android app.
-
-Special thanks to:
-
-- [benhoyt/dhash](https://github.com/benhoyt/dhash) for the lightweight difference-hash approach used as the near-duplicate baseline
-- [JohannesBuchner/imagehash](https://github.com/JohannesBuchner/imagehash) for multi-hash perceptual-image-hashing references, especially `dHash` and `pHash` usage patterns
-- [idealo/imagededup](https://github.com/idealo/imagededup) for open-source duplicate-image retrieval benchmarks and practical trade-off references between perceptual hashing and heavier ML-based methods
-
-## Image Compression Credits
-
-Transfer History image compression in GoPhoto is inspired by [meowtec/Imagine](https://github.com/meowtec/Imagine).
-
-This Android implementation adapts Imagine's batch-compression product direction for a native Transfer History workflow: selected images can be compressed in batches, then saved with a new name, exported to a dedicated compression folder, or used to replace the original only when the output is smaller.
-
-Special thanks to Imagine for the product inspiration, and to the image-optimization ecosystem it highlights, including pngquant, mozjpeg, and WebP.
-
 ![GoPhoto home](gophoto_home_shadow_soft.png)
 
 ## 前言
@@ -177,6 +149,11 @@ app/src/main/java/com/gophoto/app/
 感谢以下开源项目为本项目提供支持：
 
 - [Imagine](https://github.com/meowtec/Imagine) - 传输历史图像压缩功能的产品参考来源；本项目在 Android 端参考其批量压缩体验与整体工作流，实现了适配 GoPhoto 的 JPEG/PNG/WebP 历史图片压缩，并向 Imagine 提到的 pngquant、mozjpeg、WebP 等图像优化生态致谢。
+- [benhoyt/dhash](https://github.com/benhoyt/dhash) - 重复照片检测中轻量 `dHash` 感知哈希路线的参考来源。
+- [JohannesBuchner/imagehash](https://github.com/JohannesBuchner/imagehash) - 重复照片检测中 `dHash` 与 `pHash` 多哈希组合思路的参考来源。
+- [idealo/imagededup](https://github.com/idealo/imagededup) - 重复图像检索、感知哈希与更重型 ML 方法取舍的工程参考来源。
+
+重复照片检测功能没有直接打包第三方重复检测库，而是在 Android 端参考并改写上述开源项目中常用的感知哈希路线；当前实现使用 `SHA-256` 进行完全重复分组，并结合 `dHash` / `pHash` 做近似重复检测。
 
 ## 开源许可
 
